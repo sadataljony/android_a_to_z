@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">android_a_to_z</string>
+    <string name="show_success_dialog">Show Success Dialog</string>
+    <string name="show_failure_dialog">Show Failure Dialog</string>
 </resources>
