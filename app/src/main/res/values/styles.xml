@@ -1,0 +1,7 @@
+<resources>
+    <!-- Theme.AppCompat.Light is not a dialog theme -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_700</item>
+        <item name="colorControlActivated">@color/purple_700</item>
+    </style>
+</resources>
