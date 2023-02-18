@@ -4,6 +4,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('directory_of_key_store_file')
+            storePassword 'store_password'
+            keyAlias 'key_alias'
+            keyPassword 'key_password'
+        }
+
+        /*signing {
+            storeFile file('directory_of_key_store_file')
+            storePassword 'store_password'
+            keyAlias 'key_alias'
+            keyPassword 'key_password'
+        }*/
+    }
     namespace 'com.sadataljony.app.android.android_a_to_z'
     compileSdk 33
 
@@ -13,15 +28,93 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        debug {
+            testCoverageEnabled true
+            matchingFallbacks = ['debug']
+            debuggable true
+            manifestPlaceholders = [crashlyticsEnabled: "false",
+                                    appIcon           : "@mipmap/ic_launcher_dev",
+                                    appIconRound      : "@mipmap/ic_launcher_dev"
+            ]
+//            buildConfigField "String", "MAPS_API_KEY", "\"AIzaSyBh4EXAFSk7ZLzhuAbI10xrwdXtkMlCaUA\""
         }
+
+        qa {
+            initWith debug
+            renderscriptDebuggable true
+            multiDexEnabled true
+            versionNameSuffix '-qa'
+            applicationIdSuffix = ".staging"
+            manifestPlaceholders = [crashlyticsEnabled: "false",
+                                    appIcon           : "@mipmap/ic_launcher_stg",
+                                    appIconRound      : "@mipmap/ic_launcher_stg"
+            ]
+            resValue "string", "app_name", "HR QA"
+            buildConfigField "String", "ROOT_URL", "\"https://www.qa.com\""
+            buildConfigField "String", "PROJECT_NAME", "\"/api\""
+        }
+
+        qaRealIP {
+            initWith debug
+            renderscriptDebuggable true
+            multiDexEnabled true
+            versionNameSuffix '-qaRealIP'
+            applicationIdSuffix = ".qareal"
+            manifestPlaceholders = [crashlyticsEnabled: "false",
+                                    appIcon           : "@mipmap/ic_launcher_stg",
+                                    appIconRound      : "@mipmap/ic_launcher_stg"
+            ]
+            resValue "string", "app_name", "HR QA Real"
+            buildConfigField "String", "ROOT_URL", "\"https://www.qarealip.com\""
+            buildConfigField "String", "PROJECT_NAME", "\"/api\""
+        }
+
+        develop {
+            initWith debug
+            versionNameSuffix '-dev'
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders = [crashlyticsEnabled: "false",
+                                    appIcon           : "@mipmap/ic_launcher_dev",
+                                    appIconRound      : "@mipmap/ic_launcher_dev"
+            ]
+            resValue "string", "app_name", "HR Dev"
+            buildConfigField "String", "ROOT_URL", "\"http://www.dev.com\""
+            buildConfigField "String", "PROJECT_NAME", "\"/api\""
+        }
+
+        releaseDebug {
+            initWith debug
+            manifestPlaceholders = [crashlyticsEnabled: "false",
+                                    appIcon           : "@mipmap/app_icon",
+                                    appIconRound      : "@mipmap/app_icon_round"
+            ]
+            resValue "string", "app_name", "BBL HR Debug"
+            buildConfigField "String", "ROOT_URL", "\"https://www.releasedebug.com\""
+            buildConfigField "String", "PROJECT_NAME", "\"/api\""
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.signing
+        }
+
+        release {
+            debuggable false
+            minifyEnabled false
+            manifestPlaceholders = [crashlyticsEnabled: "true",
+                                    appIcon           : "@mipmap/app_icon",
+                                    appIconRound      : "@mipmap/app_icon_round"
+            ]
+            resValue "string", "app_name", "BBL HR"
+            buildConfigField "String", "ROOT_URL", "\"https://www.release.com\""
+            buildConfigField "String", "PROJECT_NAME", "\"/api\""
+//            buildConfigField "String", "MAPS_API_KEY", "\"AIzaSyC-VFDHAUa23Rx3mrbzZX2C7aZcMtJ3aAU\""
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -33,12 +126,11 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
