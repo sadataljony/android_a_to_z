@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnDialogSuccess.setOnClickListener {
             this.showSuccessDialog(
                 title = "Success",
-                message = "Visiting Card Request Successful",
+                message = "This is a sample success dialog",
                 buttonTitle = "OK"
             ) {
 //            showToast()
