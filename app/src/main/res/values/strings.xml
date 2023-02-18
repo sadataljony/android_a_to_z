@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android_a_to_z</string>
+    <string name="floating_action_button">Floating Action Button</string>
 </resources>
